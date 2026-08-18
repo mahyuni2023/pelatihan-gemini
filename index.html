@@ -576,7 +576,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">R - Rincian Konteks (Context)</label>
-                            <textarea id="p_context" rows="3" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Kondisi siswa? Topik spesifik?">Materi: Ekosistem Sungai & Dampak Pengolahan Sampah di Banjarmasin. Ditujukan untuk siswa kelas 7 SMPN 32 Banjarmasin dengan tingkat pemahaman awal bervariasi.</textarea>
+                            <textarea id="p_context" rows="2" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Untuk siswa kelas berapa? Kondisi siswa? Topik spesifik?">Materi: Ekosistem Sungai & Dampak Pengolahan Sampah di Banjarmasin. Ditujukan untuk siswa kelas 7 SMPN 32 Banjarmasin dengan tingkat pemahaman awal bervariasi.</textarea>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
@@ -593,8 +593,19 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">T - Tone / Gaya Bahasa</label>
                                 <select id="p_tone" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none">
                                     <option value="Gunakan gaya bahasa formal pedagogik namun komunikatif dan memotivasi.">Formal Pedagogik</option>
-                                    <option value="Gunakan bahasa santai, ramah, kekinian, dan mudah dipahami siswa SMP.">Santai & Ramah</option>
+                                    <option value="Gunakan bahasa santai, ramah, kekinian, dan mudah dipahami siswa SMP.">Santai & Ramah Siswa</option>
+                                    <option value="Gunakan gaya bahasa akademis, kritis, dan berstandar asesmen tinggi.">Akademis & Kritis</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mt-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1" title="Examples">E - Contoh (Examples)</label>
+                                <input type="text" id="p_examples" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Contoh: Jadikan seperti format modul BSNP..." value="">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1" title="Constraints">C - Batasan (Constraints)</label>
+                                <input type="text" id="p_constraints" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Contoh: Maksimal 500 kata, jangan gunakan jargon..." value="Jangan gunakan kata-kata yang terlalu sulit (jargon).">
                             </div>
                         </div>
                     </div>
@@ -626,11 +637,11 @@
         <section id="sec-prompts" class="hidden space-y-6">
             <!-- Filter sub-tabs -->
             <div class="flex space-x-2 border-b border-slate-200 pb-3 overflow-x-auto no-scrollbar">
-                <button onclick="filterBank('all')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-teal-700 text-white rounded-lg whitespace-nowrap">Semua Contoh</button>
-                <button onclick="filterBank('modul')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Modul Ajar & RPP</button>
-                <button onclick="filterBank('p5')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Projek P5 Banjar</button>
-                <button onclick="filterBank('asesmen')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Asesmen & Rubrik</button>
-                <button onclick="filterBank('diferensiasi')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Diferensiasi & Materi</button>
+                <button onclick="filterBank(event, 'all')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-teal-700 text-white rounded-lg whitespace-nowrap">Semua Contoh</button>
+                <button onclick="filterBank(event, 'modul')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Modul Ajar & RPP</button>
+                <button onclick="filterBank(event, 'p5')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Projek P5 Banjar</button>
+                <button onclick="filterBank(event, 'asesmen')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Asesmen & Rubrik</button>
+                <button onclick="filterBank(event, 'diferensiasi')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 whitespace-nowrap">Diferensiasi & Materi</button>
             </div>
 
             <!-- Grid of Prompt Cards -->
@@ -1151,10 +1162,10 @@
         }
 
         // Initialize Chart & Builder
-        document.addEventListener('DOMContentLoaded', () => {
+        window.onload = function() {
             initPerfectBuilder();
             initChart();
-        });
+        };
 
         function initChart() {
             const ctx = document.getElementById('timeSavedChart').getContext('2d');
@@ -1180,15 +1191,15 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                        legend: { position: 'bottom' }
                     }
                 }
             });
         }
 
-        // PERFECT Logic
+        // PERFECT Formula Builder Logic
         function initPerfectBuilder() {
-            const inputs = ['p_role', 'p_task', 'p_context', 'p_format', 'p_tone'];
+            const inputs = ['p_role', 'p_task', 'p_context', 'p_format', 'p_tone', 'p_examples', 'p_constraints'];
             inputs.forEach(id => {
                 document.getElementById(id).addEventListener('input', updatePerfectPrompt);
                 document.getElementById(id).addEventListener('change', updatePerfectPrompt);
@@ -1201,33 +1212,49 @@
             const task = document.getElementById('p_task').value.trim();
             const context = document.getElementById('p_context').value.trim();
             const format = document.getElementById('p_format').value;
+            const examples = document.getElementById('p_examples').value.trim();
+            const constraints = document.getElementById('p_constraints').value.trim();
             const tone = document.getElementById('p_tone').value;
 
-            const assembled = `${role}.\n\nTugas Anda: ${task}.\n\nRincian Konteks: ${context}\n\nFormat: ${format}\n\nGaya Bahasa: ${tone}`;
+            let assembled = `${role}.\n\nTugas Anda: ${task}.\n\nRincian Konteks: ${context}\n\nFormat Penyajian: ${format}`;
+            if (examples) assembled += `\n\nContoh Referensi: ${examples}`;
+            if (constraints) assembled += `\n\nBatasan: ${constraints}`;
+            assembled += `\n\nGaya Bahasa: ${tone}`;
+
             document.getElementById('perfect_result').innerText = assembled;
         }
 
         function presetPrompt(type) {
             if (type === 'rpp') {
-                document.getElementById('p_role').value = "Sebagai Guru Kurikulum Merdeka SMP";
-                document.getElementById('p_task').value = "Buatkan RPP Berdiferensiasi";
-                document.getElementById('p_context').value = "Matematika Kls 7, Materi: Aljabar Dasar.";
+                document.getElementById('p_role').value = "Bertindaklah sebagai Guru Ahli Kurikulum Merdeka SMP";
+                document.getElementById('p_task').value = "Buatkan RPP 1 Lembar Berdiferensiasi & KSE";
+                document.getElementById('p_context').value = "Mata Pelajaran Matematika Kelas 7, Materi: Aljabar Dasar (2x40 Menit). Sertakan aktivitas STOP dan diferensiasi konten.";
+                document.getElementById('p_examples').value = "Ikuti struktur RPP Nadiem Makarim (3 Komponen Inti).";
+                document.getElementById('p_constraints').value = "Pastikan muat dalam 1 halaman A4 saja saat diekspor.";
             } else if (type === 'p5') {
-                document.getElementById('p_role').value = "Sebagai Koordinator P5";
-                document.getElementById('p_task').value = "Rancang 3 Ide Projek P5";
-                document.getElementById('p_context').value = "Tema Kearifan Lokal Banjarmasin.";
+                document.getElementById('p_role').value = "Bertindaklah sebagai Koordinator Projek P5 SMPN 32 Banjarmasin";
+                document.getElementById('p_task').value = "Rancang 3 Ide Projek P5 Kearifan Lokal Banjarmasin";
+                document.getElementById('p_context').value = "Tema Kearifan Lokal untuk siswa kelas 7. Berfokus pada ekosistem sungai, Pasar Terapung, atau kerajinan Purun/Sasirangan.";
+                document.getElementById('p_examples').value = "";
+                document.getElementById('p_constraints').value = "Anggaran maksimal tiap kelompok Rp 50.000.";
             } else if (type === 'bk') {
-                document.getElementById('p_role').value = "Sebagai Guru BK SMP";
-                document.getElementById('p_task').value = "Materi panduan bullying verbal";
-                document.getElementById('p_context').value = "Untuk siswa transisi SMP kelas 7.";
+                document.getElementById('p_role').value = "Bertindaklah sebagai Guru Bimbingan Konseling (BK) SMP yang ramah dan empatik";
+                document.getElementById('p_task').value = "Buatkan materi panduan bimbingan klasikal tentang perundungan (bullying) verbal";
+                document.getElementById('p_context').value = "Ditujukan untuk siswa SMP kelas 7 yang baru mengalami masa transisi sekolah.";
+                document.getElementById('p_examples').value = "Berikan contoh studi kasus yang relevan dengan kehidupan anak SMP.";
+                document.getElementById('p_constraints').value = "Hindari bahasa menggurui, fokus pada penyelesaian konflik empati.";
             } else if (type === 'bahanajar') {
-                document.getElementById('p_role').value = "Sebagai Guru Mata Pelajaran ahli penulisan materi";
+                document.getElementById('p_role').value = "Bertindaklah sebagai Guru Mata Pelajaran ahli penulisan materi";
                 document.getElementById('p_task').value = "Buatkan ringkasan bahan ajar yang interaktif";
                 document.getElementById('p_context').value = "Materi: Sistem Tata Surya kelas 7. Sertakan analogi benda sehari-hari agar lebih mudah dipahami oleh siswa.";
+                document.getElementById('p_examples').value = "";
+                document.getElementById('p_constraints').value = "Maksimal 3 sub-bab, gunakan poin-poin agar mudah dibaca.";
             } else if (type === 'soal') {
-                document.getElementById('p_role').value = "Sebagai Evaluator Pendidikan dan Ahli Asesmen";
+                document.getElementById('p_role').value = "Bertindaklah sebagai Evaluator Pendidikan dan Ahli Asesmen";
                 document.getElementById('p_task').value = "Buatkan instrumen soal tipe HOTS (High Order Thinking Skills)";
                 document.getElementById('p_context').value = "Materi: IPS Kelas 8 tentang Mobilitas Sosial. Sertakan studi kasus kehidupan nyata di lingkungan masyarakat sebagai stimulus soal.";
+                document.getElementById('p_examples').value = "Seperti format soal literasi AKM Kemdikbud.";
+                document.getElementById('p_constraints').value = "Level kognitif harus berada di C4 (Menganalisis) atau C5 (Mengevaluasi).";
             }
             updatePerfectPrompt();
         }
@@ -1271,7 +1298,7 @@
         }
 
         // Filter Bank
-        function filterBank(cat) {
+        function filterBank(e, cat) {
             const cards = document.querySelectorAll('.bank-card');
             const btns = document.querySelectorAll('.bank-filter-btn');
             
@@ -1280,8 +1307,8 @@
                 b.classList.add('bg-slate-200', 'text-slate-700');
             });
 
-            event.target.classList.remove('bg-slate-200', 'text-slate-700');
-            event.target.classList.add('bg-teal-700', 'text-white');
+            e.target.classList.remove('bg-slate-200', 'text-slate-700');
+            e.target.classList.add('bg-teal-700', 'text-white');
 
             cards.forEach(c => {
                 if (cat === 'all' || c.getAttribute('data-category') === cat) c.classList.remove('hidden');
