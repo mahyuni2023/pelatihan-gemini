@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Pelatihan Gemini AI - SMPN 32 Banjarmasin</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        /* Chart Container Styling as strictly required */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Custom Running Text / Marquee Animation */
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            width: 100%;
+        }
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 22s linear infinite;
+        }
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Custom scrollbar for text containers */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .tab-btn.active {
+            border-bottom-color: #0d9488;
+            color: #0f766e;
+            font-weight: 700;
+            background-color: #f0fdf4;
+        }
+
+        .bank-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .bank-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+
+        .feature-card {
+            transition: all 0.25s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(13, 148, 136, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+<!-- Chosen Palette: Warm Emerald & River Teal (Grounded neutrals with vibrant education teal accents, tailored for Banjarmasin River City context) -->
+<!-- Application Structure Plan: 
+  - Header & Interactive Meta: School name, Date (20 Agustus 2026), Location (Lab Komputer/Ruang Guru SMPN 32 Banjarmasin, Jl. Alalak Utara), Account (@guru.smp.belajar.id), Quota Badge (1.000 prompt/bulan reset tgl 1).
+  - Navigation Tabs:
+      0. Halaman Utama / Beranda (Hero section, Running Text Marquee Banner, Quick Access Portal, Highlights).
+      1. Ikhtisar & Analisis (Latar belakang, 5 Tujuan Pelatihan, time-saving chart, 4 Keunggulan Gemini vs AI Lain, Akun belajar.id vs Gmail).
+      2. Formula PERFECT Prompt Builder (Interactive form builder, dynamic preview, presets for RPP, P5, BK Bullying, & Diferensiasi Teks).
+      3. Bank Prompt & Modul (Filtered prompts: Modul Ajar PBL, RPP KSE, P5 Banjar, Soal HOTS & Kisi-Kisi, Diferensiasi Teks Kaku, Rubrik Matriks, Slide Outline).
+      4. Workspace Canvas & Multimodal (Side-by-side Canvas editor simulator with targeted highlights + Multimodal Image Upload simulator).
+      5. Etika & Validasi AI (3 Pillars, Privacy guidelines, Interactive AI Hallucination & Ethics Quiz).
+      6. Workshop Task Tracker (Checklist 45 mnt, Progress calculation, Naming convention guide, Google Docs sharing).
+-->
+<!-- Visualization & Content Choices:
+  - Running Text Banner -> Goal: Inform/Promote -> Animated Marquee Text -> Continuous visibility of event title -> Custom CSS animation.
+  - Admin Time Savings -> Goal: Compare -> Chart.js Horizontal Bar Chart -> Visual proof of time reduction.
+  - Gemini vs Other AI -> Goal: Inform/Organize -> Interactive Grid Cards -> Clarifies 4 distinct advantages.
+  - Accounts Comparison -> Goal: Inform/Organize -> Comparison Cards -> Highlights Enterprise Data Protection & 1.000 quota limit.
+  - Prompt PERFECT Generator -> Goal: Build -> Interactive Form Builder -> Produces exact prompt outputs.
+  - Canvas Workspace & Image Analysis -> Goal: Demonstrate -> Split-pane document simulator + Multimodal Image analysis tester.
+  - AI Ethics Quiz -> Goal: Inform/Test -> Scenario Selector with feedback -> Teaches privacy and hallucination mitigation.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- TOP HEADER NAVBAR -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-md">
+                        32
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-slate-900 leading-tight">Portal Pelatihan Gemini AI</h1>
+                        <p class="text-xs text-teal-700 font-medium">SMPN 32 Banjarmasin &bull; Jl. Alalak Utara</p>
+                    </div>
+                </div>
+
+                <!-- Event Meta Info -->
+                <div class="hidden md:flex items-center space-x-3 text-xs font-semibold">
+                    <span class="px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                        📅 20 Agustus 2026
+                    </span>
+                    <span class="px-3 py-1.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">
+                        🔑 @guru.smp.belajar.id
+                    </span>
+                    <span class="px-3 py-1.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+                        ⚡ Limit: 1.000 Prompt/Bulan
+                    </span>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-1 overflow-x-auto no-scrollbar border-t border-slate-100 pt-1 text-sm font-medium">
+                <button onclick="switchTab('home')" id="tab-home" class="tab-btn active px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    🏠 Halaman Utama
+                </button>
+                <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    📊 Ikhtisar & Analisis
+                </button>
+                <button onclick="switchTab('perfect')" id="tab-perfect" class="tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    🎯 Formula PERFECT
+                </button>
+                <button onclick="switchTab('prompts')" id="tab-prompts" class="tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    📚 Bank Prompt & Modul
+                </button>
+                <button onclick="switchTab('canvas')" id="tab-canvas" class="tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    🎨 Canvas & Multimodal
+                </button>
+                <button onclick="switchTab('ethics')" id="tab-ethics" class="tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    🛡️ Etika & Validasi
+                </button>
+                <button onclick="switchTab('workshop')" id="tab-workshop" class="tab-btn px-4 py-2.5 border-b-2 border-transparent text-slate-600 hover:text-teal-700 whitespace-nowrap">
+                    📝 Tugas Workshop (45 Mnt)
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ================= SECTION 0: HALAMAN UTAMA / BERANDA ================= -->
+        <section id="sec-home" class="space-y-6">
+
+            <!-- RUNNING TEXT BANNER (MARQUEE) -->
+            <div class="bg-gradient-to-r from-teal-900 via-teal-800 to-slate-900 rounded-xl p-3 text-amber-300 shadow-md border border-teal-700 flex items-center">
+                <div class="flex items-center space-x-2 px-3 py-1 bg-amber-400 text-slate-900 font-extrabold text-xs rounded-lg uppercase tracking-wider shrink-0 z-10 shadow">
+                    <span>📢 INFO</span>
+                </div>
+                <div class="marquee-wrapper ml-3 text-xs md:text-sm font-semibold tracking-wide">
+                    <div class="marquee-content text-slate-100">
+                        <span class="text-amber-300 font-bold">Materi Pelatihan Gemini AI untuk Guru-guru SMPN 32 Banjarmasin</span>
+                        <span class="mx-4 text-teal-400">&bull;</span>
+                        <span>Optimalisasi Pembelajaran Berdiferensiasi & P5 Kearifan Lokal Kota Seribu Sungai</span>
+                        <span class="mx-4 text-teal-400">&bull;</span>
+                        <span class="text-emerald-300">Pelaksanaan: 20 Agustus 2026 @ Lab Komputer SMPN 32 Banjarmasin</span>
+                        <span class="mx-4 text-teal-400">&bull;</span>
+                        <span>Gunakan Akun Institusi @guru.smp.belajar.id untuk Perlindungan Data Privasi 100%</span>
+                        <span class="mx-4 text-teal-400">&bull;</span>
+                        <span class="text-amber-300 font-bold">Materi Pelatihan Gemini AI untuk Guru-guru SMPN 32 Banjarmasin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HERO WELCOME BANNER -->
+            <div class="bg-gradient-to-br from-teal-800 via-teal-900 to-slate-900 rounded-2xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden border border-teal-700">
+                <div class="relative z-10 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="px-3 py-1 bg-teal-500/30 backdrop-blur-md border border-teal-300/30 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-200">
+                            🏫 SMPN 32 Banjarmasin &bull; Kota Seribu Sungai
+                        </span>
+                        <span class="px-3 py-1 bg-amber-500/20 border border-amber-300/30 rounded-full text-xs font-medium text-amber-200">
+                            ✨ Kurikulum Merdeka + Google Workspace
+                        </span>
+                    </div>
+                    <h2 class="text-2xl md:text-4xl font-black mb-3 leading-tight tracking-tight">
+                        Selamat Datang di Portal Pelatihan & Workshop Gemini AI
+                    </h2>
+                    <p class="text-slate-200 text-sm md:text-base leading-relaxed mb-6">
+                        Platform interaktif pendamping pelatihan untuk Tenaga Pendidik SMPN 32 Banjarmasin. Temukan kerangka praktis menyusun Modul Ajar, RPP Berdiferensiasi, Asesmen HOTS, hingga Projek P5 Berbasis Budaya Sungai Alalak secara kilat dan presisi.
+                    </p>
+
+                    <!-- Quick Action Hero CTA -->
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="switchTab('perfect')" class="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs md:text-sm rounded-xl transition shadow-lg flex items-center space-x-2">
+                            <span>🎯 Coba Formula PERFECT Generator</span>
+                            <span>&rarr;</span>
+                        </button>
+                        <button onclick="switchTab('prompts')" class="px-5 py-2.5 bg-teal-700/80 hover:bg-teal-600 text-white font-bold text-xs md:text-sm rounded-xl border border-teal-400/30 transition backdrop-blur-sm flex items-center space-x-2">
+                            <span>📚 Buka Bank Prompt Siap Pakai</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Abstract Decorative Shapes -->
+                <div class="absolute -right-12 -bottom-12 w-80 h-80 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute right-1/4 -top-12 w-48 h-48 bg-amber-400/10 rounded-full blur-2xl pointer-events-none"></div>
+            </div>
+
+            <!-- KEY STATS & METRICS DISPLAY -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-2xl md:text-3xl font-black text-teal-600">85%+</div>
+                    <div class="text-xs text-slate-600 font-medium mt-1">Efisiensi Admin Guru</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-2xl md:text-3xl font-black text-emerald-600">1.000</div>
+                    <div class="text-xs text-slate-600 font-medium mt-1">Kuota Prompt/Bulan</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-2xl md:text-3xl font-black text-amber-600">6 Modul</div>
+                    <div class="text-xs text-slate-600 font-medium mt-1">Praktik Aplikasi Langsung</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-2xl md:text-3xl font-black text-slate-800">100%</div>
+                    <div class="text-xs text-slate-600 font-medium mt-1">Aman Privasi Data Sekolah</div>
+                </div>
+            </div>
+
+            <!-- MODULE NAVIGATION GRID (QUICK ACCESS CARDS) -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Pilih Modul & Area Pelatihan</h3>
+                        <p class="text-xs text-slate-500">Klik salah satu kartu di bawah ini untuk memulai eksplorasi materi interaktif</p>
+                    </div>
+                    <span class="text-xs font-semibold text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
+                        📍 Lab Komputer / Ruang Guru
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    
+                    <!-- Card 1: Overview & Analysis -->
+                    <div onclick="switchTab('overview')" class="feature-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-lg mb-3">
+                                📊
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Ikhtisar & Analisis Waktu</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Pelajari latar belakang, 5 tujuan utama pelatihan, perbandingan waktu manual vs AI, serta keunggulan akun @belajar.id.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-teal-700">
+                            <span>Buka Modul</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: PERFECT Prompt Builder -->
+                    <div onclick="switchTab('perfect')" class="feature-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg mb-3">
+                                🎯
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Formula PERFECT Builder</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Generator perintah presisi tinggi (Role, Task, Context, Format, Tone) lengkap dengan preset RPP, P5 Banjar & BK.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-700">
+                            <span>Buka Generator</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Bank Prompt & Modul Ajar -->
+                    <div onclick="switchTab('prompts')" class="feature-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-lg mb-3">
+                                📚
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Bank Prompt & Contoh Modul</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Koleksi prompt siap pakai: Modul Ajar PBL, RPP KSE, P5 Sungai Banjarmasin, Soal HOTS, Rubrik Matriks, & Slide PPT.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-700">
+                            <span>Lihat Koleksi</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Canvas & Multimodal -->
+                    <div onclick="switchTab('canvas')" class="feature-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center font-bold text-lg mb-3">
+                                🎨
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Canvas & Multimodal Simulator</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Uji coba penyuntingan dokumen di fitur Canvas interaktif serta analisis foto grafik / buku cetak (Multimodal Image).
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-purple-700">
+                            <span>Uji Simulator</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Etika & Validasi AI -->
+                    <div onclick="switchTab('ethics')" class="feature-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center font-bold text-lg mb-3">
+                                🛡️
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Etika, Privasi & Quiz Validasi</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Kerangka *Human in the Loop*, panduan anonimisasi data pribadi siswa, serta kuis simulasi mitigasi halusinasi AI.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between text-xs font-bold text-rose-700">
+                            <span>Pelajari Etika</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Task Tracker 45 Mnt -->
+                    <div onclick="switchTab('workshop')" class="feature-card bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-lg mb-3">
+                                📝
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Checklist Tugas Workshop 45 Mnt</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Lembar kerja mandiri guru: ikuti 5 langkah pembuatan modul, lacak progres kemajuan, dan petunjuk pengumpulan link Docs.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-700">
+                            <span>Mulai Tugas</span>
+                            <span>&rarr;</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- INFO BANNER FOOTER ON HOME -->
+            <div class="bg-teal-50 border border-teal-200 p-5 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-teal-700 text-white flex items-center justify-center text-xl font-bold shrink-0 shadow">
+                        💡
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-teal-900 text-sm">Petunjuk Akses Cepat Guru</h4>
+                        <p class="text-xs text-teal-800 mt-0.5">
+                            Pastikan Anda sudah login browser Google Chrome menggunakan profil akun <strong>@guru.smp.belajar.id</strong> sebelum membuka situs <strong>gemini.google.com</strong>.
+                        </p>
+                    </div>
+                </div>
+                <a href="https://gemini.google.com" target="_blank" class="px-5 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs rounded-xl shadow transition whitespace-nowrap">
+                    🌐 Buka Gemini AI &rarr;
+                </a>
+            </div>
+
+        </section>
+
+        <!-- ================= SECTION 1: IKHTISAR & ANALISIS ================= -->
+        <section id="sec-overview" class="hidden space-y-6">
+            <!-- Intro Card -->
+            <div class="bg-gradient-to-r from-teal-800 to-slate-800 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <span class="px-3 py-1 bg-teal-500/30 backdrop-blur-md border border-teal-300/30 rounded-full text-xs font-semibold uppercase tracking-wider text-teal-200">
+                            Transformasi Digital Guru Modern
+                        </span>
+                        <span class="text-xs text-slate-300 bg-slate-900/50 px-3 py-1 rounded-full">
+                            📍 Lokasi: Lab Komputer / Ruang Guru SMPN 32 Banjarmasin
+                        </span>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold mb-2">Mengapa Guru SMPN 32 Banjarmasin Perlu Gemini AI?</h2>
+                    <p class="text-slate-200 text-sm md:text-base max-w-4xl leading-relaxed">
+                        Implementasi Kurikulum Merdeka menuntut Pembelajaran Berdiferensiasi dan Projek P5 berbasis kearifan lokal "Kota Seribu Sungai" Banjarmasin. Gemini AI hadir bukan untuk menggantikan peran esensial guru, melainkan sebagai <em>Co-Pilot</em> cerdas untuk mengikis kelelahan administratif dan mengembalikan waktu berharga bersama peserta didik di kelas.
+                    </p>
+                </div>
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            </div>
+
+            <!-- 5 Training Objectives Collapsible Banner -->
+            <div class="bg-white p-5 rounded-xl border border-teal-100 shadow-sm">
+                <div class="flex items-center justify-between cursor-pointer" onclick="toggleObjectives()">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xl">🎯</span>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm">5 Tujuan Utama Pelatihan Guru SMPN 32</h3>
+                            <p class="text-xs text-slate-500">Klik untuk melihat indikator kompetensi peserta pelatihan</p>
+                        </div>
+                    </div>
+                    <span id="objArrow" class="text-teal-600 font-bold text-sm">▼ Lihat Detail</span>
+                </div>
+                
+                <div id="objectivesContent" class="hidden mt-4 pt-4 border-t border-slate-100 grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
+                    <div class="p-3 bg-teal-50/60 rounded-lg border border-teal-100">
+                        <strong class="text-teal-900 block font-bold mb-1">1. Urgensi & Etika</strong>
+                        Memahami etika dan kecerdasan AI dalam ekosistem pendidikan modern.
+                    </div>
+                    <div class="p-3 bg-teal-50/60 rounded-lg border border-teal-100">
+                        <strong class="text-teal-900 block font-bold mb-1">2. Akses Akun</strong>
+                        Mengoperasikan fitur Gemini Pro dengan akun institusi @belajar.id.
+                    </div>
+                    <div class="p-3 bg-teal-50/60 rounded-lg border border-teal-100">
+                        <strong class="text-teal-900 block font-bold mb-1">3. Formula PERFECT</strong>
+                        Menguasai teknik Prompt Engineering presisi tinggi baku PERFECT.
+                    </div>
+                    <div class="p-3 bg-teal-50/60 rounded-lg border border-teal-100">
+                        <strong class="text-teal-900 block font-bold mb-1">4. Modul & Asesmen</strong>
+                        Memproduksi draf RPP, Modul Ajar, ATP, Soal HOTS & Rubrik kilat.
+                    </div>
+                    <div class="p-3 bg-teal-50/60 rounded-lg border border-teal-100">
+                        <strong class="text-teal-900 block font-bold mb-1">5. P5 Lokal Banjar</strong>
+                        Merancang projek P5 tematik kearifan lokal budaya sungai Banjarmasin.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Efisiensi Administrasi</div>
+                    <div class="text-3xl font-black text-teal-600 mt-2">85% - 90%</div>
+                    <div class="text-xs text-slate-500 mt-1">Penghematan waktu draf RPP & Rubrik</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kuota Akun belajar.id</div>
+                    <div class="text-3xl font-black text-emerald-600 mt-2">1.000</div>
+                    <div class="text-xs text-slate-500 mt-1">Prompt Pro / bulan (Reset tiap tanggal 1)</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kerangka Prompting</div>
+                    <div class="text-3xl font-black text-amber-600 mt-2">P-E-R-F-E-C-T</div>
+                    <div class="text-xs text-slate-500 mt-1">Formula baku perintah presisi tinggi</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Privasi Data Sekolah</div>
+                    <div class="text-3xl font-black text-teal-700 mt-2">100% Aman</div>
+                    <div class="text-xs text-slate-500 mt-1">Enterprise Data Protection (Privat)</div>
+                </div>
+            </div>
+
+            <!-- 4 Keunggulan Gemini AI Dibanding AI Lain (Sesi 1.1) -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-1 flex items-center">
+                    <span class="mr-2">💡</span> 4 Keunggulan Utama Gemini AI Dibandingkan Platform AI Lain
+                </h3>
+                <p class="text-xs text-slate-500 mb-4">Mengapa Google Gemini dipilih sebagai alat bantu utama untuk pendidik di sekolah.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                    <div class="p-4 rounded-xl bg-teal-50/50 border border-teal-100 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xl mb-2 block">🎁</span>
+                            <strong class="text-teal-900 font-bold block mb-1">Akses Fitur Premium Gratis</strong>
+                            <p class="text-slate-600 leading-relaxed">Nikmati model kecerdasan tingkat tinggi tanpa biaya langganan bulanan melalui lisensi institusi sekolah.</p>
+                        </div>
+                        <span class="mt-3 text-[10px] text-teal-700 font-semibold uppercase">via @belajar.id</span>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-blue-50/50 border border-blue-100 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xl mb-2 block">📂</span>
+                            <strong class="text-blue-900 font-bold block mb-1">Integrasi Google Workspace</strong>
+                            <p class="text-slate-600 leading-relaxed">Hasil teks dapat diekspor langsung 1-Klik ke Google Docs & Slides tanpa mengacaukan tabel atau format.</p>
+                        </div>
+                        <span class="mt-3 text-[10px] text-blue-700 font-semibold uppercase">Tanpa Copy-Paste Manual</span>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-emerald-50/50 border border-emerald-100 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xl mb-2 block">🔍</span>
+                            <strong class="text-emerald-900 font-bold block mb-1">Pencarian Real-Time Search</strong>
+                            <p class="text-slate-600 leading-relaxed">Terhubung langsung dengan mesin pencari Google untuk mengakses regulasi Kurikulum Merdeka paling kini.</p>
+                        </div>
+                        <span class="mt-3 text-[10px] text-emerald-700 font-semibold uppercase">Bertenaga Google Search</span>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-purple-50/50 border border-purple-100 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xl mb-2 block">📷</span>
+                            <strong class="text-purple-900 font-bold block mb-1">Multimodal Alami</strong>
+                            <p class="text-slate-600 leading-relaxed">Mampu menganalisis teks, gambar grafik, foto soal dari buku cetak lama, dan tabel sekaligus dalam satu instruksi.</p>
+                        </div>
+                        <span class="mt-3 text-[10px] text-purple-700 font-semibold uppercase">Bawaan Sejak Awal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts & Visual Comparison -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Visual Chart 1: Time Savings Comparison -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center">
+                        <span class="mr-2">⏱️</span> Estimasi Waktu Kerja Guru (Manual vs Gemini AI)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4">Perbandingan estimasi waktu pengerjaan tugas administratif (dalam menit).</p>
+                    <div class="chart-container">
+                        <canvas id="timeSavedChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Feature Comparison: belajar.id vs Standard Gmail -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center">
+                            <span class="mr-2">🔑</span> Keunggulan Akun @belajar.id vs Gmail Biasa
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-4">Alasan utama mengapa guru wajib login menggunakan akun resmi institusi pendidikan (Sesi 1.3).</p>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="p-3 bg-teal-50 rounded-xl border border-teal-100 flex items-start space-x-3">
+                                <span class="text-teal-600 font-bold text-lg">🔒</span>
+                                <div>
+                                    <strong class="text-teal-900 font-semibold">Perlindungan Data Institusi (Privasi Utama):</strong>
+                                    <p class="text-xs text-teal-800 mt-0.5">Prompt dan draf Anda TIDAK akan digunakan oleh Google untuk melatih model AI publik mereka. Data modul & administrasi sekolah tetap privat.</p>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100 flex items-start space-x-3">
+                                <span class="text-emerald-600 font-bold text-lg">⚡</span>
+                                <div>
+                                    <strong class="text-emerald-900 font-semibold">Kuota 1.000 Prompt Pro / Bulan:</strong>
+                                    <p class="text-xs text-emerald-800 mt-0.5">Memiliki akses model performa tinggi setara Gemini Advanced dengan batas wajar 1.000 prompt/bulan (di-reset otomatis tiap tanggal 1).</p>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start space-x-3">
+                                <span class="text-slate-600 font-bold text-lg">☁️</span>
+                                <div>
+                                    <strong class="text-slate-900 font-semibold">Drive Sekolah & Terhubung Classroom:</strong>
+                                    <p class="text-xs text-slate-600 mt-0.5">Hasil ekspor Gemini langsung tersimpan di penyimpanan cloud sekolah tanpa batas 15GB dan siap dibagikan ke Google Classroom siswa.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+                        <span>Alamat Akses: <strong>gemini.google.com</strong></span>
+                        <span class="text-teal-600 font-medium">Tips: Sinkronkan profil browser Chrome lebih dulu</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 2: FORMULA PERFECT GENERATOR ================= -->
+        <section id="sec-perfect" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 pb-4 border-b border-slate-100">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Interactive PERFECT Prompt Builder</h2>
+                        <p class="text-xs text-slate-500">Susun perintah presisi tinggi dengan mengisikan formula P-E-R-F-E-C-T di bawah ini.</p>
+                    </div>
+                    <div class="mt-2 md:mt-0 flex flex-wrap gap-2">
+                        <button onclick="presetPrompt('rpp')" class="px-3 py-1.5 text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg hover:bg-teal-50 hover:text-teal-700 transition">Preset RPP 1 Lembar</button>
+                        <button onclick="presetPrompt('p5')" class="px-3 py-1.5 text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg hover:bg-teal-50 hover:text-teal-700 transition">Preset P5 Banjar</button>
+                        <button onclick="presetPrompt('bk')" class="px-3 py-1.5 text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg hover:bg-teal-50 hover:text-teal-700 transition">Preset BK Bullying</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Form Controls -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">P - Peran (Role)</label>
+                            <input type="text" id="p_role" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Contoh: Bertindaklah sebagai Guru IPA SMP berpengalaman..." value="Bertindaklah sebagai Guru Komputer & Inovator Pembelajaran SMP">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">E - Ekspektasi (Task)</label>
+                            <input type="text" id="p_task" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Contoh: Buatkan modul ajar berdiferensiasi..." value="Buatkan draf Modul Ajar Kurikulum Merdeka 2 JP">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">R - Rincian Konteks (Context)</label>
+                            <textarea id="p_context" rows="3" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Untuk siswa kelas berapa? Kondisi siswa? Topik spesifik?">Materi: Ekosistem Sungai & Dampak Pengolahan Sampah di Banjarmasin. Ditujukan untuk siswa kelas 7 SMPN 32 Banjarmasin dengan tingkat pemahaman awal bervariasi.</textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">F - Format Output</label>
+                                <select id="p_format" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                    <option value="Sajikan dalam bentuk tabel terstruktur dengan poin-poin yang rapi.">Tabel Rapi & Poin-poin</option>
+                                    <option value="Sajikan dalam bentuk draf RPP 1 lembar lengkap dengan 5 bagian utama.">RPP 1 Lembar</option>
+                                    <option value="Buatkan 5 soal pilihan ganda HOTS beserta tabel kisi-kisi dan kunci jawaban.">Kisi-kisi + Soal HOTS</option>
+                                    <option value="Sajikan dalam bentuk dialog skenario role-play interaktif.">Skenario Role-Play</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">T - Tone / Gaya Bahasa</label>
+                                <select id="p_tone" class="w-full text-sm p-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                                    <option value="Gunakan gaya bahasa formal pedagogik namun komunikatif dan memotivasi.">Formal Pedagogik</option>
+                                    <option value="Gunakan bahasa santai, ramah, kekinian, dan mudah dipahami siswa SMP.">Santai & Ramah Siswa</option>
+                                    <option value="Gunakan gaya bahasa akademis, kritis, dan berstandar asesmen tinggi.">Akademis & Kritis</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Assembled Output -->
+                    <div class="lg:col-span-6 flex flex-col justify-between bg-slate-900 text-slate-100 p-5 rounded-xl border border-slate-800">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                                <span class="text-xs font-semibold text-teal-400 uppercase tracking-wider">✨ Ready-to-Use Generated Prompt</span>
+                                <span class="text-[10px] bg-teal-900/60 text-teal-300 px-2 py-0.5 rounded border border-teal-700">Formula PERFECT</span>
+                            </div>
+                            <div id="perfect_result" class="mt-4 text-xs font-mono text-slate-300 leading-relaxed whitespace-pre-line bg-slate-950/60 p-4 rounded-lg border border-slate-800 min-h-[220px]">
+                                <!-- Dynamic prompt will populate here -->
+                            </div>
+                        </div>
+
+                        <div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-800">
+                            <span class="text-xs text-slate-400">Salin lalu tempelkan langsung di <strong>gemini.google.com</strong></span>
+                            <button onclick="copyPromptResult()" id="copyBtn" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-lg transition shadow-md flex items-center space-x-1">
+                                <span>📋 Salin Prompt</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 3: BANK PROMPT & MODUL ================= -->
+        <section id="sec-prompts" class="hidden space-y-6">
+            <!-- Filter sub-tabs -->
+            <div class="flex space-x-2 border-b border-slate-200 pb-3 overflow-x-auto no-scrollbar">
+                <button onclick="filterBank('all')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-teal-700 text-white rounded-lg">Semua Contoh</button>
+                <button onclick="filterBank('modul')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Modul Ajar & RPP</button>
+                <button onclick="filterBank('p5')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Projek P5 Banjar</button>
+                <button onclick="filterBank('asesmen')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Asesmen & Rubrik</button>
+                <button onclick="filterBank('diferensiasi')" class="bank-filter-btn px-3 py-1.5 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Diferensiasi & Slide</button>
+            </div>
+
+            <!-- Grid of Prompt Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="bankGrid">
+                
+                <!-- Card 1: Modul Ajar PBL IPA (Praktik 1) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="modul">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Praktik 1 &bull; Modul Ajar</span>
+                            <span class="text-xs text-slate-400">Model PBL</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">Modul Ajar IPA Kelas 8 (Sistem Pencernaan)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Menyusun kerangka sintaks Problem Based Learning (2 JP) lengkap dari pendahuluan hingga penutup.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Bantu saya menyusun draf Modul Ajar Kurikulum Merdeka untuk mata pelajaran IPA Kelas 8 SMP. Materi: Sistem Pencernaan Manusia. Alokasi waktu: 2 JP (2 x 40 menit). Model Pembelajaran: Problem Based Learning (PBL). Tolong buatkan terstruktur meliputi: 1. Tujuan Pembelajaran, 2. Pemahaman Bermakna, 3. Pertanyaan Pemantik, 4. Kegiatan Pendahuluan (15 menit), 5. Kegiatan Inti (50 menit) dengan sintaks PBL, dan 6. Penutup (15 menit)."
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: RPP 1 Lembar Berdiferensiasi & KSE (Praktik 2) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="modul">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Praktik 2 &bull; RPP Berdiferensiasi</span>
+                            <span class="text-xs text-slate-400">Fitur KSE & STOP</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">RPP 1 Lembar Matematika Kelas 7 (Aljabar)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Memuat integrasi Kompetensi Sosial Emosional (KSE) dan pembagian kelompok belajar visual, auditori, kinestetik.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Bertindaklah sebagai guru ahli pembuat RPP. Buatkan saya draf RPP 1 Lembar berdiferensiasi untuk mata pelajaran Matematika Kelas 7 SMP, materi 'Aljabar Dasar', alokasi waktu 2x40 menit. Format RPP harus berbentuk poin-poin yang rapi dan menggunakan bahasa formal pedagogik, memuat: 1. Tujuan Pembelajaran, 2. Kegiatan Pendahuluan (sertakan aktivitas KSE teknik STOP), 3. Kegiatan Inti Diferensiasi Konten (Visual, Auditori, Kinestetik), 4. Penutup & Refleksi, 5. Asesmen Formatif."
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3: P5 Kearifan Lokal Banjarmasin (Praktik 3) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="p5">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Praktik 3 &bull; P5 Lokal Banjar</span>
+                            <span class="text-xs text-slate-400">Budaya Sungai</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">Projek P5 Kearifan Lokal SMPN 32 Banjarmasin</h3>
+                        <p class="text-xs text-slate-600 mt-1">Mengangkat tema Pasar Terapung, transportasi klotok, pelestarian ikan haruan, atau kain Sasirangan/Purun.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Saya adalah koordinator P5 di SMPN 32 Banjarmasin. Tema P5 kali ini adalah 'Kearifan Lokal' dengan dimensi bernalar kritis dan kreatif. Berikan saya 3 ide aktivitas projek yang menarik, aplikatif, dan berbiaya murah untuk siswa SMP kelas 7 berkaitan dengan budaya sungai di Banjarmasin (Pasar Terapung, klotok, pelestarian ikan haruan, atau kerajinan purun/sasirangan). Untuk setiap ide, buatkan tabel: Nama Projek, Tujuan Spesifik, Langkah Aktivitas, dan Produk Akhir Siswa."
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 4: Kisi-kisi & Soal HOTS IPS (Praktik 4) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="asesmen">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Praktik 4 &bull; Asesmen HOTS</span>
+                            <span class="text-xs text-slate-400">Level C4-C5</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">Kisi-Kisi & Soal HOTS IPS Kelas 8 (Mobilitas Sosial)</h3>
+                        <p class="text-xs text-slate-600 mt-1">Meminta AI membuat tabel indikator terlebih dahulu disusul soal stimulus konteks nyata.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Bertindaklah sebagai pembuat soal ahli. Saya akan mengadakan Ulangan Harian IPS Kelas 8 materi 'Mobilitas Sosial'. Pertama, buatkan tabel Kisi-kisi Soal (No, Capaian Pembelajaran, Indikator Soal, Level Kognitif C4-C5, Bentuk Soal). Kedua, buatkan 3 soal pilihan ganda kompleks (HOTS) yang disertai teks stimulus berupa kasus nyata di masyarakat beserta kunci jawaban dan pembahasannya."
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 5: Diferensiasi Konten / Menyederhanakan Teks (Praktik 5) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="diferensiasi">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Praktik 5 &bull; Diferensiasi Konten</span>
+                            <span class="text-xs text-slate-400">Penyederhanaan Teks</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">Menyederhanakan Bahasa Buku Paket Kaku</h3>
+                        <p class="text-xs text-slate-600 mt-1">Mengubah kalimat akademis yang terlalu rumit menjadi cerita atau analogi menarik untuk siswa bimbingan.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Tolong tulis ulang teks dari buku paket di bawah ini menjadi bentuk cerita pendek atau analogi sederhana agar lebih mudah dipahami oleh siswa SMP kelas 7 yang masih kesulitan memahami bahasa akademis kaku. Gunakan kalimat pendek-pendek dan gaya bahasa bercerita yang interaktif. Berikut teksnya: [PASTE TEKS BUKU PAKET DI SINI]"
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 6: Rubrik Penilaian Otomatis (Praktik 6) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="asesmen">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Praktik 6 &bull; Rubrik Matriks</span>
+                            <span class="text-xs text-slate-400">Skala 1 - 4</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">Rubrik Unjuk Kerja Presentasi & Poster</h3>
+                        <p class="text-xs text-slate-600 mt-1">Rubrik penilaian performa terperinci untuk presentasi kelompok tema lingkungan hidup.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Bertindaklah sebagai evaluator pendidikan. Buatkan rubrik penilaian unjuk kerja dalam bentuk tabel untuk tugas 'Presentasi Kelompok Pembuatan Poster Pemanasan Global' untuk siswa SMP. Kriteria yang dinilai: 1) Akurasi Konten, 2) Kreativitas Desain Poster, 3) Kerjasama Tim, 4) Keterampilan Komunikasi. Buat skala penilaian 1 (Perlu Bimbingan) sampai 4 (Sangat Baik) beserta deskripsi indikator perilaku yang jelas di setiap sel."
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 7: Slide Presentasi Outline (Sesi 4.4) -->
+                <div class="bank-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between" data-category="diferensiasi">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Sesi 4.4 &bull; Slide Outline</span>
+                            <span class="text-xs text-slate-400">Konversi Teks</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm">Konversi Teks Bahan Ajar ke Google Slides</h3>
+                        <p class="text-xs text-slate-600 mt-1">Mengubah bacaan panjang menjadi kerangka presentasi 5-7 slide lengkap dengan saran ide visual.</p>
+                        
+                        <div class="mt-3 bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 max-h-36 overflow-y-auto">
+                            "Saya memiliki bahan ajar berupa teks di bawah ini. Tolong konversikan materi ini menjadi kerangka presentasi (slide outline) 5-7 slide. Untuk setiap slide tuliskan: Judul Slide, Poin Utama (3-4 bullet points singkat), dan Ide Visual/Gambar yang cocok disisipkan untuk siswa SMP. Berikut teks materinya: [TEMPEL TEKS DI SINI]"
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+                        <button onclick="copyTextFromElement(this)" class="text-xs text-teal-700 font-bold hover:underline flex items-center">
+                            <span>📋 Salin Prompt Ini</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= SECTION 4: WORKSPACE CANVAS & MULTIMODAL ================= -->
+        <section id="sec-canvas" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="mb-4 pb-3 border-b border-slate-100">
+                    <span class="px-2.5 py-1 rounded bg-teal-100 text-teal-800 text-xs font-bold uppercase">Fitur Lanjutan (Sesi 4)</span>
+                    <h2 class="text-xl font-bold text-slate-900 mt-1">Interaktif Simulator: Gemini Canvas & Multimodal Image</h2>
+                    <p class="text-xs text-slate-500">
+                        Cobalah simulator di bawah untuk merasakan pengalaman menyunting dokumen di <strong>Canvas</strong> serta fitur <strong>Unggah Gambar (Multimodal)</strong>.
+                    </p>
+                </div>
+
+                <!-- Sub-tab Selector for Canvas vs Multimodal Image -->
+                <div class="flex space-x-2 mb-4">
+                    <button onclick="switchCanvasTab('doc')" id="btn-canvas-doc" class="px-4 py-2 text-xs font-bold bg-teal-700 text-white rounded-lg">📄 Simulator Canvas Dokumen</button>
+                    <button onclick="switchCanvasTab('image')" id="btn-canvas-img" class="px-4 py-2 text-xs font-bold bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">📷 Simulator Analisis Gambar (Multimodal)</button>
+                </div>
+
+                <!-- 1. Simulator Canvas Document View -->
+                <div id="view-canvas-doc" class="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[480px]">
+                    <!-- Left Pane: Gemini Chat Control -->
+                    <div class="lg:col-span-5 bg-slate-900 text-slate-100 p-4 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 pb-3 border-b border-slate-800">
+                                <div class="w-3 h-3 rounded-full bg-teal-400 animate-pulse"></div>
+                                <span class="text-xs font-bold text-slate-300">Google Gemini Workspace Chat</span>
+                            </div>
+                            
+                            <div class="mt-4 space-y-3 text-xs">
+                                <div class="p-3 bg-slate-800 rounded-lg text-slate-300">
+                                    💬 <strong>Guru:</strong> <em>"Gemini, buatkan draf ringkasan materi IPA Pencernaan untuk siswa SMPN 32 Banjarmasin."</em>
+                                </div>
+                                <div class="p-3 bg-teal-950 border border-teal-800 rounded-lg text-teal-200">
+                                    🤖 <strong>Gemini:</strong> Tentu! Saya telah membuka dokumen baru di <strong>Canvas</strong> (sisi kanan). Anda bisa langsung mengedit, memblok kalimat tertentu, atau menggunakan tombol aksi cepat di bawah!
+                                </div>
+                            </div>
+
+                            <!-- Interactive Action Buttons -->
+                            <div class="mt-6">
+                                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Uji Coba Aksi Cepat Canvas:</label>
+                                <div class="space-y-2">
+                                    <button onclick="simCanvasAction('discussion')" class="w-full text-left px-3 py-2 bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 rounded-lg transition flex items-center justify-between">
+                                        <span>🔄 Ubah Inti Materi ke Diskusi Kelompok</span>
+                                        <span class="text-[10px] bg-teal-800 px-1.5 py-0.5 rounded text-teal-200">Target Edit</span>
+                                    </button>
+                                    <button onclick="simCanvasAction('simplify')" class="w-full text-left px-3 py-2 bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 rounded-lg transition flex items-center justify-between">
+                                        <span>📉 Sederhanakan Bahasa (Untuk Diferensiasi)</span>
+                                        <span class="text-[10px] bg-amber-800 px-1.5 py-0.5 rounded text-amber-200">Shortcut</span>
+                                    </button>
+                                    <button onclick="simCanvasAction('expand')" class="w-full text-left px-3 py-2 bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 rounded-lg transition flex items-center justify-between">
+                                        <span>📈 Tambahkan Detail Contoh Lokal Banjar</span>
+                                        <span class="text-[10px] bg-emerald-800 px-1.5 py-0.5 rounded text-emerald-200">Shortcut</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Export Integration Footer (Sesi 4.3) -->
+                        <div class="mt-6 pt-3 border-t border-slate-800 flex items-center justify-between">
+                            <span class="text-[11px] text-slate-400">Integrasi 1-Klik:</span>
+                            <button onclick="simExportDocs()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition flex items-center space-x-1">
+                                <span>📤 Ekspor ke Google Docs</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Pane: Interactive Canvas Document -->
+                    <div class="lg:col-span-7 bg-amber-50/40 p-5 rounded-xl border border-amber-200/80 flex flex-col justify-between relative shadow-inner">
+                        <div>
+                            <!-- Canvas Document Header -->
+                            <div class="flex items-center justify-between pb-3 border-b border-amber-200">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-base">📄</span>
+                                    <span class="text-xs font-bold text-amber-900">CANVAS DOKUMEN: [Draf] Modul_Ajar_IPA_SMPN32.docx</span>
+                                </div>
+                                <span class="px-2 py-0.5 bg-amber-200/60 text-amber-900 rounded text-[10px] font-bold">Editable Pane</span>
+                            </div>
+
+                            <!-- Editable Document Body -->
+                            <div id="canvasDocumentBody" class="mt-4 text-xs leading-relaxed text-slate-800 space-y-3 font-sans bg-white p-4 rounded-lg border border-amber-100 shadow-sm min-h-[300px]">
+                                <h4 class="font-bold text-sm text-slate-900 border-b pb-1">MODUL AJAR: SISTEM PENCERNAAN MANUSIA</h4>
+                                <p><strong>Target:</strong> Siswa Kelas 8 SMPN 32 Banjarmasin</p>
+                                <p><strong>1. Tujuan Pembelajaran:</strong> Siswa mampu menganalisis organ-organ pencernaan utama dan fungsinya dalam menyerap nutrisi makanan.</p>
+                                
+                                <div id="targetBlock" class="p-2.5 bg-slate-50 border-l-4 border-teal-500 rounded transition-all">
+                                    <p><strong>2. Kegiatan Inti (50 Menit):</strong></p>
+                                    <p id="targetText">Guru menjelaskan slide presentasi tentang organ pencernaan dari mulut hingga usus. Siswa mendengarkan penjelasan guru dan mencatat poin penting di buku tugas masing-masing.</p>
+                                </div>
+
+                                <p><strong>3. Penilaian (Formative):</strong> Kuis singkat 3 soal pilihan ganda di akhir jam pelajaran.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 text-[11px] text-slate-500 italic text-right">
+                            *Klik tombol di sebelah kiri untuk melihat pembaruan dokumen Canvas secara langsung!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Simulator Multimodal / Image Upload (Sesi 4.2) -->
+                <div id="view-canvas-img" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[440px]">
+                    <div class="lg:col-span-5 bg-slate-900 text-slate-100 p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 pb-3 border-b border-slate-800">
+                                <span class="text-base">📷</span>
+                                <span class="text-xs font-bold text-slate-300">Simulasi Fitur Multimodal (Image to Text)</span>
+                            </div>
+                            
+                            <p class="text-xs text-slate-300 mt-3 leading-relaxed">
+                                Fitur Multimodal memungkinkan Anda mengunggah foto grafik, diagram sel, atau foto halaman buku lama. Gemini akan membaca dan menganalisis gambar tersebut!
+                            </p>
+
+                            <div class="mt-4 p-3 bg-slate-800 rounded-lg text-xs space-y-2 border border-slate-700">
+                                <div class="text-teal-400 font-bold uppercase text-[10px]">Langkah Praktik (Sesi 4.2):</div>
+                                <ol class="list-decimal list-inside text-slate-300 space-y-1">
+                                    <li>Klik ikon gambar 📷 di sebelah kolom ketik Gemini.</li>
+                                    <li>Pilih foto grafik / soal dari komputer.</li>
+                                    <li>Ketik prompt perintah analisis.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button onclick="simImageAnalysis()" class="w-full py-2.5 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-lg transition shadow flex items-center justify-center space-x-2">
+                                <span>🔍 Uji Coba Analisis Gambar Ini</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="flex justify-between items-center pb-3 border-b border-slate-100 mb-3">
+                                <span class="text-xs font-bold text-slate-800">Pratinjau Gambar Sampel yang Diunggah</span>
+                                <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded text-slate-600">Sample_Grafik_Lingkungan.jpg</span>
+                            </div>
+
+                            <!-- Styled Visual Graphic Container -->
+                            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 text-center space-y-2">
+                                <div class="text-xs font-bold text-slate-700">📊 Diagram Batang: Timbulan Sampah Plastik di Sungai Banjarmasin (2023 - 2026)</div>
+                                <div class="h-28 bg-white border border-slate-200 rounded flex items-end justify-center space-x-6 p-3">
+                                    <div class="w-8 bg-teal-300 h-[40%] text-[9px] font-bold pt-1">45t</div>
+                                    <div class="w-8 bg-teal-400 h-[60%] text-[9px] font-bold pt-1">60t</div>
+                                    <div class="w-8 bg-teal-500 h-[75%] text-[9px] font-bold pt-1">75t</div>
+                                    <div class="w-8 bg-teal-700 h-[90%] text-[9px] font-bold pt-1 text-white">90t</div>
+                                </div>
+                                <div class="text-[10px] text-slate-500">Tahun 2023 | 2024 | 2025 | 2026</div>
+                            </div>
+
+                            <!-- Analysis Result Box -->
+                            <div id="imgAnalysisResult" class="mt-4 p-3 bg-teal-50 border border-teal-200 rounded-lg text-xs text-teal-900 hidden">
+                                <strong>🤖 Hasil Analisis Gemini AI:</strong>
+                                <p class="mt-1 text-[11px] leading-relaxed">
+                                    "Berdasarkan grafik yang diunggah, terjadi peningkatan timbulan sampah plastik dari 45 ton (2023) menjadi 90 ton (2026). <br>
+                                    <strong>Rekomendasi Pertanyaan Pemantik Kelas:</strong> <br>
+                                    1. Faktor apa yang menyebabkan kenaikan sampah di sungai dalam 3 tahun terakhir? <br>
+                                    2. Bagaimana dampaknya terhadap kelangsungan hidup ikan Haruan di Sungai Alalak?"
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-[11px] text-slate-400 italic text-right mt-2">
+                            *Multimodal sangat efisien untuk memproses foto materi tanpa mengetik ulang!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 5: ETIKA & VALIDASI AI ================= -->
+        <section id="sec-ethics" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="mb-4 pb-3 border-b border-slate-100">
+                    <span class="px-2.5 py-1 rounded bg-rose-100 text-rose-800 text-xs font-bold uppercase">Sesi 5 &bull; Pedoman Penting</span>
+                    <h2 class="text-xl font-bold text-slate-900 mt-1">Etika, Privasi Data & Mitigasi Halusinasi AI</h2>
+                    <p class="text-xs text-slate-500">
+                        Prinsip utama: <strong>Human in the Loop</strong>. AI adalah asisten cerdas, namun tanggung jawab profesional pedagogis sepenuhnya tetap berada di tangan guru.
+                    </p>
+                </div>
+
+                <!-- 3 Pillars Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-sm mb-2">1</div>
+                        <h3 class="font-bold text-slate-900 text-sm">Prinsip Human in the Loop</h3>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Semua draf modul dari Gemini wajib dibaca ulang, dikurasi, dan disesuaikan dengan kondisi psikologis siswa kelas Anda. Jangan langsung salin-tempel 100%.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center font-bold text-sm mb-2">2</div>
+                        <h3 class="font-bold text-slate-900 text-sm">Privasi & Anonimisasi Data</h3>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed"><strong>DILARANG KERAS</strong> mengetikkan NIK, NISN, nama lengkap siswa, atau mengunggah nilai rapor asli. Gunakan samaran (Siswa A, Siswa B).</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm mb-2">3</div>
+                        <h3 class="font-bold text-slate-900 text-sm">Waspada "Halusinasi" AI</h3>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">AI terkkadang menciptakan fakta atau mengarang judul buku paket Kemdikbud fiktif yang seolah-olah nyata padahal palsu. Selalu validasi referensi!</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Quiz Game: Spot the Hallucination & Privacy Violation -->
+                <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 rounded-xl">
+                    <h3 class="text-sm font-bold text-amber-400 mb-1 flex items-center">
+                        <span class="mr-2">🧩</span> Uji Pemahaman Validasi (Studi Kasus Realistis)
+                    </h3>
+                    <p class="text-xs text-slate-300 mb-4">Manakah di antara tindakan guru berikut yang <strong>SALAH / MELANGGAR ETIKA</strong> saat menggunakan Gemini AI?</p>
+
+                    <div class="space-y-3 text-xs">
+                        <button onclick="checkQuiz(1)" class="w-full text-left p-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 flex items-center justify-between transition">
+                            <span>A. Guru meminta Gemini membuat 5 soal HOTS, lalu guru mengecek ulang kunci jawabannya sebelum dibagikan ke siswa.</span>
+                            <span id="q1-mark" class="text-sm"></span>
+                        </button>
+                        <button onclick="checkQuiz(2)" class="w-full text-left p-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 flex items-center justify-between transition">
+                            <span>B. Guru mengunggah file foto daftar nilai asli yang memuat Nama Lengkap 32 siswa beserta NIK untuk dianalisis Gemini.</span>
+                            <span id="q2-mark" class="text-sm"></span>
+                        </button>
+                        <button onclick="checkQuiz(3)" class="w-full text-left p-3 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 flex items-center justify-between transition">
+                            <span>C. Guru meminta Gemini ide aktivitas P5 tema sungai Banjarmasin, lalu mengecek ketersediaan anggaran sekolah.</span>
+                            <span id="q3-mark" class="text-sm"></span>
+                        </button>
+                    </div>
+                    
+                    <div id="quizFeedback" class="mt-4 p-3 rounded bg-slate-800/90 text-xs hidden border border-amber-500/40">
+                        <!-- Dynamic feedback text -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 6: WORKSHOP TASK TRACKER ================= -->
+        <section id="sec-workshop" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <div>
+                        <span class="px-2.5 py-1 rounded bg-amber-100 text-amber-800 text-xs font-bold uppercase">Lembar Kerja Mandiri (45 Menit)</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Checklist Tugas Workshop Pelatihan</h2>
+                        <p class="text-xs text-slate-500">Selesaikan langkah-langkah di bawah ini dan kumpulkan tautan Google Docs Anda.</p>
+                    </div>
+                    <div class="mt-3 md:mt-0 px-4 py-2 bg-slate-100 rounded-xl border border-slate-200 text-center">
+                        <div class="text-[10px] text-slate-500 font-bold uppercase">Status Kemajuan</div>
+                        <div id="progressPercent" class="text-lg font-black text-teal-600">0% Selesai</div>
+                    </div>
+                </div>
+
+                <!-- Checklist Items -->
+                <div class="space-y-3">
+                    <label class="flex items-start space-x-3 p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                        <input type="checkbox" onchange="updateProgress()" class="ws-check mt-0.5 w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <div>
+                            <strong class="text-sm text-slate-900 block">Langkah 1: Tentukan 1 Topik Materi Minggu Depan</strong>
+                            <span class="text-xs text-slate-500">Pilih mata pelajaran yang Bapak/Ibu ampu dan materi spesifik yang akan diajarkan.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start space-x-3 p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                        <input type="checkbox" onchange="updateProgress()" class="ws-check mt-0.5 w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <div>
+                            <strong class="text-sm text-slate-900 block">Langkah 2: Buat Prompt dengan Formula PERFECT di Gemini</strong>
+                            <span class="text-xs text-slate-500">Masuk ke gemini.google.com dengan akun @guru.smp.belajar.id dan hasilkan draf utama.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start space-x-3 p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                        <input type="checkbox" onchange="updateProgress()" class="ws-check mt-0.5 w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <div>
+                            <strong class="text-sm text-slate-900 block">Langkah 3: Gunakan Fitur Canvas untuk Edit & Modifikasi Document</strong>
+                            <span class="text-xs text-slate-500">Cobalah fitur highlight text untuk mengubah sebagian kalimat atau menyesuaikan konteks kelas.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start space-x-3 p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                        <input type="checkbox" onchange="updateProgress()" class="ws-check mt-0.5 w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <div>
+                            <strong class="text-sm text-slate-900 block">Langkah 4: Ekspor Hasil ke Google Docs</strong>
+                            <span class="text-xs text-slate-500">Klik ikon "Bagikan & Ekspor" &rarr; Ekspor ke Dokumen. Format tabel akan otomatis tersimpan rapi di Google Drive.</span>
+                        </div>
+                    </label>
+
+                    <label class="flex items-start space-x-3 p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition">
+                        <input type="checkbox" onchange="updateProgress()" class="ws-check mt-0.5 w-4 h-4 text-teal-600 rounded border-slate-300 focus:ring-teal-500">
+                        <div>
+                            <strong class="text-sm text-slate-900 block">Langkah 5: Simpan File dengan Standar Nama & Kumpulkan Link</strong>
+                            <span class="text-xs text-slate-500">Gunakan format file: <code class="bg-amber-100 text-amber-900 px-1 py-0.5 rounded font-mono">[Nama Lengkap] - [Mata Pelajaran] - Tugas Gemini SMPN 32</code></span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Submission Box Guidance -->
+                <div class="mt-6 p-4 rounded-xl bg-teal-50 border border-teal-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h4 class="font-bold text-teal-900 text-sm">Siap Mengumpulkan Tugas?</h4>
+                        <p class="text-xs text-teal-800">Pastikan akses berbagi link Google Docs Anda telah diatur ke <em>"Siapa saja yang memiliki link"</em>.</p>
+                    </div>
+                    <button onclick="alert('Salin tautan Google Docs Anda dan tempelkan ke grup WhatsApp Pelatihan atau Google Classroom SMPN 32 Banjarmasin!')" class="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs rounded-lg shadow">
+                        📤 Petunjuk Pengumpulan
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-semibold text-slate-700">Modul Pelatihan & Workshop Pemanfaatan Gemini AI</p>
+            <p class="mt-1">Dirancang khusus untuk Tenaga Pendidik SMPN 32 Banjarmasin &bull; Tanggal Pelaksanaan: 20 Agustus 2026</p>
+            <p class="mt-2 text-slate-400">&copy; 2026 SMPN 32 Banjarmasin. Integrated with Google Workspace for Education.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT CORE LOGIC -->
+    <script>
+        // Tab Navigation Switcher (Includes new Home tab)
+        function switchTab(tabId) {
+            const tabs = ['home', 'overview', 'perfect', 'prompts', 'canvas', 'ethics', 'workshop'];
+            tabs.forEach(t => {
+                const sec = document.getElementById('sec-' + t);
+                const btn = document.getElementById('tab-' + t);
+                if (t === tabId) {
+                    sec.classList.remove('hidden');
+                    btn.classList.add('active');
+                } else {
+                    sec.classList.add('hidden');
+                    btn.classList.remove('active');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Objectives Collapsible
+        function toggleObjectives() {
+            const content = document.getElementById('objectivesContent');
+            const arrow = document.getElementById('objArrow');
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                arrow.innerText = '▲ Sembunyikan';
+            } else {
+                content.classList.add('hidden');
+                arrow.innerText = '▼ Lihat Detail';
+            }
+        }
+
+        // Initialize Chart.js Horizontal Bar Chart
+        document.addEventListener('DOMContentLoaded', () => {
+            initPerfectBuilder();
+            initChart();
+        });
+
+        function initChart() {
+            const ctx = document.getElementById('timeSavedChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Modul Ajar PBL', 'RPP 1 Lembar & KSE', 'Rubrik Evaluasi', 'Soal HOTS & Kisi-Kisi', 'Outline Slide PPT'],
+                    datasets: [
+                        {
+                            label: 'Pengerjaan Manual (Menit)',
+                            data: [180, 90, 60, 90, 75],
+                            backgroundColor: 'rgba(148, 163, 184, 0.7)',
+                            borderColor: 'rgba(148, 163, 184, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Dengan Gemini AI (Menit)',
+                            data: [15, 8, 5, 10, 7],
+                            backgroundColor: 'rgba(13, 148, 136, 0.85)',
+                            borderColor: 'rgba(15, 118, 110, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { font: { family: 'Plus Jakarta Sans', size: 11 } }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.x + ' Menit';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Waktu Pengerjaan (Menit)', font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // PERFECT Formula Builder Logic
+        function initPerfectBuilder() {
+            const inputs = ['p_role', 'p_task', 'p_context', 'p_format', 'p_tone'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', updatePerfectPrompt);
+                document.getElementById(id).addEventListener('change', updatePerfectPrompt);
+            });
+            updatePerfectPrompt();
+        }
+
+        function updatePerfectPrompt() {
+            const role = document.getElementById('p_role').value.trim();
+            const task = document.getElementById('p_task').value.trim();
+            const context = document.getElementById('p_context').value.trim();
+            const format = document.getElementById('p_format').value;
+            const tone = document.getElementById('p_tone').value;
+
+            const assembled = `${role}.\n\nTugas Anda: ${task}.\n\nRincian Konteks: ${context}\n\nFormat Penyajikan: ${format}\n\nGaya Bahasa: ${tone}`;
+            document.getElementById('perfect_result').innerText = assembled;
+        }
+
+        function presetPrompt(type) {
+            if (type === 'rpp') {
+                document.getElementById('p_role').value = "Bertindaklah sebagai Guru Ahli Kurikulum Merdeka SMP";
+                document.getElementById('p_task').value = "Buatkan RPP 1 Lembar Berdiferensiasi & KSE";
+                document.getElementById('p_context').value = "Mata Pelajaran Matematika Kelas 7, Materi: Aljabar Dasar (2x40 Menit). Sertakan aktivitas STOP dan diferensiasi konten.";
+            } else if (type === 'p5') {
+                document.getElementById('p_role').value = "Bertindaklah sebagai Koordinator Projek P5 SMPN 32 Banjarmasin";
+                document.getElementById('p_task').value = "Rancang 3 Ide Projek P5 Kearifan Lokal Banjarmasin";
+                document.getElementById('p_context').value = "Tema Kearifan Lokal untuk siswa kelas 7. Berfokus pada ekosistem sungai, Pasar Terapung, atau kerajinan Purun/Sasirangan.";
+            } else if (type === 'bk') {
+                document.getElementById('p_role').value = "Bertindaklah sebagai Guru Bimbingan Konseling (BK) SMP yang ramah dan empatik";
+                document.getElementById('p_task').value = "Buatkan materi panduan bimbingan klasikal tentang perundungan (bullying) verbal";
+                document.getElementById('p_context').value = "Ditujukan untuk siswa SMP kelas 7 yang baru mengalami masa transisi sekolah.";
+            }
+            updatePerfectPrompt();
+        }
+
+        function copyPromptResult() {
+            const text = document.getElementById('perfect_result').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.innerHTML = '<span>✅ Tersalin!</span>';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<span>📋 Salin Prompt</span>';
+                }, 2000);
+            });
+        }
+
+        function copyTextFromElement(btn) {
+            const card = btn.closest('.bank-card');
+            const promptText = card.querySelector('.font-mono').innerText.replace(/^"|"$/g, '');
+            navigator.clipboard.writeText(promptText).then(() => {
+                btn.innerHTML = '<span>✅ Tersalin!</span>';
+                setTimeout(() => {
+                    btn.innerHTML = '<span>📋 Salin Prompt Ini</span>';
+                }, 2000);
+            });
+        }
+
+        // Filter Bank Prompts
+        function filterBank(cat) {
+            const cards = document.querySelectorAll('.bank-card');
+            const btns = document.querySelectorAll('.bank-filter-btn');
+            
+            btns.forEach(b => {
+                b.classList.remove('bg-teal-700', 'text-white');
+                b.classList.add('bg-slate-200', 'text-slate-700');
+            });
+
+            event.target.classList.remove('bg-slate-200', 'text-slate-700');
+            event.target.classList.add('bg-teal-700', 'text-white');
+
+            cards.forEach(c => {
+                if (cat === 'all' || c.getAttribute('data-category') === cat) {
+                    c.classList.remove('hidden');
+                } else {
+                    c.classList.add('hidden');
+                }
+            });
+        }
+
+        // Canvas & Multimodal Sub-tab switcher
+        function switchCanvasTab(view) {
+            const vDoc = document.getElementById('view-canvas-doc');
+            const vImg = document.getElementById('view-canvas-img');
+            const btnDoc = document.getElementById('btn-canvas-doc');
+            const btnImg = document.getElementById('btn-canvas-img');
+
+            if (view === 'doc') {
+                vDoc.classList.remove('hidden');
+                vImg.classList.add('hidden');
+                btnDoc.classList.replace('bg-slate-200', 'bg-teal-700');
+                btnDoc.classList.replace('text-slate-700', 'text-white');
+                btnImg.classList.replace('bg-teal-700', 'bg-slate-200');
+                btnImg.classList.replace('text-white', 'text-slate-700');
+            } else {
+                vDoc.classList.add('hidden');
+                vImg.classList.remove('hidden');
+                btnImg.classList.replace('bg-slate-200', 'bg-teal-700');
+                btnImg.classList.replace('text-slate-700', 'text-white');
+                btnDoc.classList.replace('bg-teal-700', 'bg-slate-200');
+                btnDoc.classList.replace('text-white', 'text-slate-700');
+            }
+        }
+
+        // Canvas Simulator Interactions
+        function simCanvasAction(act) {
+            const targetBlock = document.getElementById('targetBlock');
+            const targetText = document.getElementById('targetText');
+            
+            if (act === 'discussion') {
+                targetBlock.className = "p-2.5 bg-teal-50 border-l-4 border-teal-600 rounded transition-all";
+                targetText.innerHTML = "<strong>[Target Edit: Diskusi Kelompok]</strong> Guru membagi siswa menjadi 5 kelompok kecil. Setiap kelompok diberikan sampel studi kasus dampak sampah plastik di Sungai Alalak untuk didiskusikan dan dipresentasikan.";
+            } else if (act === 'simplify') {
+                targetBlock.className = "p-2.5 bg-amber-50 border-l-4 border-amber-500 rounded transition-all";
+                targetText.innerHTML = "<strong>[Shortcut: Sederhanakan]</strong> Makanan yang kita makan akan dihancurkan di mulut, lalu masuk ke lambung untuk diolah menjadi energi tubuh kita setiap hari.";
+            } else if (act === 'expand') {
+                targetBlock.className = "p-2.5 bg-emerald-50 border-l-4 border-emerald-600 rounded transition-all";
+                targetText.innerHTML = "<strong>[Shortcut: Konteks Banjar]</strong> Siswa mendiskusikan kebiasaan konsumsi ikan Haruan dan Ikan Papuyu lokal kaitannya dengan nutrisi protein tinggi bagi pertumbuhan remaja SMP di Banjarmasin.";
+            }
+        }
+
+        function simExportDocs() {
+            alert("✨ Ekspor Berhasil! Dokumen [Draf] Modul_Ajar_IPA_SMPN32 telah dibuat dan tersimpan aman di Google Drive akun @guru.smp.belajar.id Anda.");
+        }
+
+        function simImageAnalysis() {
+            const res = document.getElementById('imgAnalysisResult');
+            res.classList.remove('hidden');
+        }
+
+        // Ethics Quiz Logic
+        function checkQuiz(choice) {
+            const feedback = document.getElementById('quizFeedback');
+            feedback.classList.remove('hidden');
+
+            document.getElementById('q1-mark').innerText = "";
+            document.getElementById('q2-mark').innerText = "";
+            document.getElementById('q3-mark').innerText = "";
+
+            if (choice === 2) {
+                document.getElementById('q2-mark').innerText = "❌ JAWABAN BENAR (MELANGGAR ETIKA)";
+                feedback.innerHTML = "<strong class='text-rose-400'>Tepat Sekali!</strong> Tindakan B melanggar privasi data personal siswa. Mengunggah NIK/Nama Asli siswa ke AI dilarang keras. Gunakan data anonim/samaran (contoh: Siswa 1, Siswa 2).";
+            } else {
+                if(choice === 1) document.getElementById('q1-mark').innerText = "✅ (Ini Tindakan Benar)";
+                if(choice === 3) document.getElementById('q3-mark').innerText = "✅ (Ini Tindakan Benar)";
+                feedback.innerHTML = "<strong class='text-amber-300'>Belum Tepat.</strong> Pilihan tersebut adalah contoh penerapan etika yang BENAR (Human in the loop & adaptasi anggaran). Cari pilihan yang melanggar kerahasiaan data siswa!";
+            }
+        }
+
+        // Workshop Progress Tracker
+        function updateProgress() {
+            const checks = document.querySelectorAll('.ws-check');
+            let checkedCount = 0;
+            checks.forEach(c => { if(c.checked) checkedCount++; });
+            const pct = Math.round((checkedCount / checks.length) * 100);
+            document.getElementById('progressPercent').innerText = pct + "% Selesai";
+        }
+    </script>
+</body>
+</html>
